@@ -6,6 +6,8 @@
 *.mod.c
 *.a
 *.a.cmd
+*.mod.cmd
+*.mod
 Module.symvers
 modules.order
 
