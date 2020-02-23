@@ -18,6 +18,7 @@
     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 
+#include <linux/version.h>
 #include <linux/slab.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
@@ -316,6 +317,8 @@ static int tas2101_read_ucblocks(struct dvb_frontend *fe, u32 *ucblocks)
 	return 0;
 }
 
+
+#ifndef TBS_STANDALONE
 static void tas2101_spi_read(struct dvb_frontend *fe, struct ecp3_info *ecp3inf)
 {
 
@@ -333,6 +336,7 @@ static void tas2101_spi_write(struct dvb_frontend *fe,struct ecp3_info *ecp3inf)
 		priv->cfg->write_properties(adapter,ecp3inf->reg, ecp3inf->data);
 	return ;
 }
+#endif
 
 static int tas2101_set_voltage(struct dvb_frontend *fe,
 	enum fe_sec_voltage voltage)
@@ -924,9 +928,10 @@ static struct dvb_frontend_ops tas2101_ops = {
 	.set_frontend = tas2101_set_frontend,
 	.get_frontend = tas2101_get_frontend,
 
+#ifndef TBS_STANDALONE
 	.spi_read			= tas2101_spi_read,
 	.spi_write			= tas2101_spi_write,
-
+#endif
 
 };
 
